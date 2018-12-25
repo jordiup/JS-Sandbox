@@ -1,45 +1,26 @@
 /*
-  Working with object literals and object instances.
+  Working with dates and times.
 */
-
-const person = {
-  firstName : 'Jordi',
-  lastName : 'Hermoso',
-  age : 20,
-  email : 'test@gmail.com',
-  faveAnimal : '🐈',
-  hobbies : ['🏃', '🍪', '📷'],
-  address : {
-    state: 'WA',
-    city : 'Perth'
-  },
-  getBirthYear : function(){
-    return 2018 - this.age;
-  }
-}
 
 let val;
 
-// Get entire object
-val = person;
-// Get specific value
-val = person.firstName;
-val = person.age;
-val = person.hobbies[2];
-val = person.address.state;
-val = person.address['city'];
-val = person.getBirthYear();
+const today = new Date();
+let birthday = new Date('Tue Dec 25 2018 12:10:23 GMT+0800');
+birthday = new Date('12-03-1998');
+birthday = new Date('12/03/1998');
 
-// Array of people
-const people = [
-  {name:'Kim', age:30},
-  {name:'Mike', age:27},
-  {name:'Jack', age:72},
-];
-// Forloop to print names
-for (let i = 0; i < people.length; i++){
-  console.log(people[i].name);
-}
+let thisMonth = today.getMonth(); // zero based
+val = today.getDate();
+val = today.getDay();
+val = today.getFullYear();
+val = today.getHours();
+val = today.getMinutes();
+val = today.getSeconds();
+val = today.getTime();
+
+birthday.setMonth(2);
+birthday.setDate(12);
+birthday.setHours(3);
 
 // Output
 console.log(val);
