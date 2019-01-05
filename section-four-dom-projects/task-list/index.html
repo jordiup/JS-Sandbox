@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <!-- Compiled and minified CSS -->
+   <link rel="stylesheet" href="../offline-resources/materialize.min.css">
+   <link href="../offline-resources/font-awesome.min.css" rel="stylesheet"
+     crossorigin="anonymous">
+
+   <!-- Compiled and minified JavaScript -->
+    <title>Task List</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col s12">
+          <h1>Task List</h1>
+          <p><i>This is a basic task list created as a part of 'Modern JavaScript From The Beginning'. Using JavaScript, you can add list items dynamically.</i></p><br>
+          <div id="main" class="card">
+            <div class="card-content">
+              <span class="card-title">Task List</span>
+              <div class="row">
+                <form id="task-form">
+                <div class="input-field col s12">
+                  <input type="text" name="task" id="task">
+                  <label for="task">Add Tasks</label>
+                </div>
+                <input value="Add task" type="submit" class="btn">
+              </form>
+            </div>
+          </div>
+
+          <div class="card-action">
+            <h5 id="task-title">Tasks</h5>
+          <div class="input-field col s12">
+            <input type="text" name="filter" id="filter">
+            <label for="filter">Filter Tasks</label>
+          </div>
+          <ul class="collection"></ul>
+          <a class="clear-tasks btn black" href="#">Clear Tasks</a>
+          </div>
+        </div>
+
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+    <!-- Script -->
+    <script
+      src="../offline-resources/jquery-3.3.1.js"
+      crossorigin="anonymous"></script>
+    <script src="../offline-resources/materialize.min.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+  </body>
+</html>
