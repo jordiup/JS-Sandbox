@@ -6,7 +6,11 @@ Each of the following folders contains one section from the course:
 1. ~~Intro & Getting Started~~
 2. JavaScript Language Fundamentals (17/17) ✅
 3. DOM Manipulation & Events (12/12) ✅
-4. DOM Projects (0/9) 👷 🚧
+4. DOM Projects (0/3) 👷 🚧
+ - task list
+ - loan calculator
+ - number guesser
+ 
 <!-- 5. Object Oriented JavaScript - ES6 & Beyond (0/6) -->
 <!-- 6. OOP Book List Project (50/55) -->
 
