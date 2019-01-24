@@ -3,18 +3,18 @@ The purpose of this repo is to document my progress of [_'Modern JavaScript From
 
 
 Each of the following folders contains one section from the course:
-1. ~~Intro & Getting Started~~
+<!-- 1. ~~Intro & Getting Started~~ -->
 2. JavaScript Language Fundamentals (17/17) ✅
 3. DOM Manipulation & Events (12/12) ✅
 4. DOM Projects (1/3)
- - [task list](https://jordiup.github.io/js_sandbox/section-four-dom-projects/task-list/index.html) - a project that showcases, local storage event listeners, and more! ✅
- - loan calculator 👷 🚧
+ - [task list](https://jordiup.github.io/js_sandbox/section-four-dom-projects/task-list/index.html) - a project that showcases local storage event listeners, and more! ✅
+ - [loan calculator](https://jordiup.github.io/js_sandbox/section-four-dom-projects/loan-calculator/index.html) 👷 🚧
  - number guesser 👷 🚧
 
 <!-- 5. Object Oriented JavaScript - ES6 & Beyond (0/6) -->
 <!-- 6. OOP Book List Project (50/55) -->
 
-Later there will be projects in this repo.
+Later there will be more projects in this repo.
 
 <!-- Misc. -->
 <!-- [here](https://) -->
