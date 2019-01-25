@@ -1,8 +1,16 @@
 // Listen for submit
-document.getElementById('loan-form').addEventListener('submit', calculateResults);
+document.getElementById('loan-form').addEventListener('submit', function(e){
+  // Hide results
+  document.getElementById('results').style.display = 'none';
+  // Show loader
+  document.getElementById('loading').style.display = 'block';
+  setTimeout(calculateResults,200);
+
+  e.preventDefault();
+});
 
 // Calculate results
-function calculateResults(e){
+function calculateResults(){
   console.log('Calculating...');
 
   // UI vars
@@ -25,16 +33,22 @@ function calculateResults(e){
     monthlyPayment.value = monthly.toFixed(2); // sets number of decimals on monthlypayment to 2
     totalPayment.value = (monthly * calculatedPayments).toFixed(2);
     totalInterest.value = ((monthly * calculatedPayments) - principal).toFixed(2);
+
+    document.getElementById('results').style.display = 'block'; // Show spinner
+    document.getElementById('loading').style.display = 'none'; // Hide loader
+
   } else { // if its not finite
-    conosole.log('Error: numbers return infinite value..')
+    console.log('Error: numbers return infinite value..')
     showError('Please check your numbers');
   }
 
-  e.preventDefault();
 }
 
 // Show error
 function showError(error){
+  document.getElementById('results').style.display = 'none'; // Show spinner
+  document.getElementById('loading').style.display = 'none'; // Hide loader
+
 
   const errorDiv = document.createElement('div'); // creates a div
   const card = document.querySelector('.card'); // gets elemeents
