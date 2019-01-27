@@ -8,8 +8,8 @@ Each of the following folders contains one section from the course:
 3. DOM Manipulation & Events (12/12) ✅
 4. DOM Projects (1/3)
  - [task list](https://jordiup.github.io/js_sandbox/section-four-dom-projects/task-list/index.html) - a project that showcases local storage event listeners, and more! ✅
- - [loan calculator](https://jordiup.github.io/js_sandbox/section-four-dom-projects/loan-calculator/index.html) 👷 🚧
- - number guesser 👷 🚧
+ - [loan calculator](https://jordiup.github.io/js_sandbox/section-four-dom-projects/loan-calculator/index.html) ✅
+ - [number guesser](https://jordiup.github.io/js_sandbox/section-four-dom-projects/number-guesser/index.html) 👷 🚧
 
 5. Object Oriented JavaScript - ES6 & Beyond (0/6)
 <!-- 6. OOP Book List Project (50/55) -->

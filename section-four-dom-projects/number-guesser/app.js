@@ -10,8 +10,7 @@
 // Game values
 let min = 1,
     max = 10,
-    // winningNum = Random.integer(),
-    winningNum = 2,
+    winningNum = getRandomNum(min,max),
     guessesLeft = 3;
 
 // UI elements
@@ -58,8 +57,20 @@ guessBtn.addEventListener('click', function(){
         guessInput.value = '';
       }
   }
+});
 
+// Get winning Number
+function getRandomNum(min, max){
+  temp = Math.floor(Math.random()*(max-min+1));
+  console.log('secret secret, the winning number is: ' +  temp);
+  return temp;
+}
 
+// Play again event listener
+game.addEventListener('mousedown', function(e){
+  if (e.target.className === 'play-again'){
+    window.location.reload();
+  }
 });
 
 // Game over
@@ -70,6 +81,10 @@ function gameOver(won, msg){
   guessInput.style.borderColor = color;
   guessInput.style.color = color;
   setMessage(msg, color);
+
+  // Play again?
+  guessBtn.value = 'Play again';
+  guessBtn.className += 'play-again';
 }
 
 
