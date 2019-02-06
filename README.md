@@ -11,8 +11,8 @@ Each of the following folders contains one section from the course:
  - [loan calculator](https://jordiup.github.io/js_sandbox/section-four-dom-projects/loan-calculator/index.html) ✅
  - [number guesser](https://jordiup.github.io/js_sandbox/section-four-dom-projects/number-guesser/index.html) ✅
 
-5. Object Oriented JavaScript - ES5 & Beyond! (7/7) 
-<!-- 6. OOP Book List Project (50/55) -->
+5. [Object Oriented JavaScript - ES5 & Beyond! (7/7)](https://jordiup.github.io/js_sandbox/section-six-oop-project/es6/index.html) ✅
+6. OOP Book List Project (0/6) 🚧👷
 
 Later there will be more projects in this repo.
 
