@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton-framework/1.1.1/skeleton.css" />
   <style>
   /* CUSTOM CSS */
+  @import url('https://fonts.googleapis.com/css?family=Libre+Barcode+128');
   .success, .error{
     color: white;
     padding: 5px;
@@ -47,6 +48,7 @@
   #submit {
     min-height:0px;
     color:white;
+    border: none;
     /* background-color:rgba(1,1,1,0.8); */
   }
   </style>
@@ -62,17 +64,16 @@
     </div>
     <div>
       <label for="author">Author</label>
-      <input type="text" class="u-full-width" id="title">
+      <input type="text" class="u-full-width" id="author">
     </div>
     <div>
       <label for="isbn">ISBN</label>
-      <input type="text" class="u-full-width" id="title">
+      <input type="text" class="u-full-width" id="isbn">
     </div>
     <div>
-      <input type="submit" value="submit" class="u-full-width" id="submit">
+      <input type="submit" value="submit" class="u-full-width">
     </div>
   </form>
-  <hr>
   <table class="u-full-width">
     <thead>
       <tr>

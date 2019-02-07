@@ -6,24 +6,45 @@ function Book(title, author, isbn) {
 }
 
 // UI constructor
-// function UI(){
-// }
+function UI(){}
 
-// UI.prototype.addBookToList = function(book){
-//   console.log()
-// }
+// Add book to list
+UI.prototype.addBookToList = function(book){
+  const list = document.getElementById('book-list');
+  // Create tr element
+  const row = document.createElement('tr');
+  // Insert collumns
+  row.innerHTML = `
+    <td>${book.title}</td>
+    <td>${book.author}</td>
+    <td><span style="font-family: 'Libre Barcode 128'">${book.isbn}</span>&emsp;<span style="color:grey">(${book.isbn})</span></td>
+    <td><a href="#" class="delete">X</a></td>
+  `;
+  list.appendChild(row);
+}
+
+UI.prototype.clearFields = function(){
+  document.getElementById('title').value = '';
+  document.getElementById('author').value = '';
+  document.getElementById('isbn').value = '';
+}
 
 // Event listeners
 document.getElementById('book-form').addEventListener('submit',
   function(e){
+    console.log('YOOOOOOOOOOOOOOOOOOOOOOOOO');
     // Get form values
     const title = document.getElementById('title').value,
           author = document.getElementById('author').value,
-          isbn = document.getElementById('isbn').value;
+          isbn = document.getElementById('isbn').value
     // Instantiate book
     const book = new Book(title, author, isbn);
+    // Instantiate the UI
+    const ui = new UI();
+    // Add book to the list
+    ui.addBookToList(book);
+    ui.clearFields();
     // Test log the form fields
-    console.log(author,title,isbn);
-
+    console.log(ui);
     e.preventDefault();
 });
