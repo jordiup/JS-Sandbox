@@ -65,10 +65,36 @@ document.getElementById('book-form').addEventListener('submit',
       //  Error alert
       ui.showAlert('Please fill in all fields', 'error');
     }
+    else {
+      // Notify user
+      ui.showAlert('Book successfully added', 'success')      
+    }
     // Add book to the list
     ui.addBookToList(book);
+    // Clear fields
     ui.clearFields();
     // Test log the form fields
     console.log(ui);
+
     e.preventDefault();
+});
+
+// Delete book
+UI.prototype.deleteBook = function(target){
+  if(target.className === 'delete'){
+    // Up from td, to tr (dom traversing) to remove element from dom
+    target.parentElement.parentElement.remove();
+  }
+}
+
+// Evenet listener for delete
+document.getElementById('book-list').addEventListener('click', function(e){
+  console.log(123);
+  // Instantiate the UI
+  const ui = new UI();
+  // Delete target
+  ui.deleteBook(e.target);
+
+
+  e.preventDefault();
 });
