@@ -12,7 +12,9 @@ Each of the following folders contains one section from the course:
  - [number guesser](https://jordiup.github.io/js_sandbox/section-four-dom-projects/number-guesser/index.html) ✅
 
 5. Object Oriented JavaScript - ES5 & Beyond! (7/7) ✅
-6. [OOP Book List Project (2/6) 🚧👷](https://jordiup.github.io/js_sandbox/section-six-oop-project/es6/index.html)
+6. OOP Book List Project (6/6) 
+ - [es5 version ✅](https://jordiup.github.io/js_sandbox/section-six-oop-project/es5/index.html)
+ - [es6 version ✅](https://jordiup.github.io/js_sandbox/section-six-oop-project/es5/index.html)
 
 Later there will be more projects in this repo.
 
