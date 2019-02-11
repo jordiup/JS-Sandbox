@@ -38,7 +38,7 @@
     background: linear-gradient(140deg, #ffbf1e, #25a6f1, #25f18d);
     background-size: 600% 600%;
     animation: GradientBg 49s ease infinite;;
-    min-height: 100vh;
+    /* min-height: 100vh; */
   }
   @keyframes GradientBg {
     0% {
@@ -63,7 +63,7 @@
 <div class="container">
   <h1><b>Add book 📚 <sup>[ES6]</sup> </b></h1>
   <p>This is a book list project was created as a part of 'Modern JavaScript From The Beginning', Enter a book below!</p>
-  <form action="" id="book-form">
+  <form action="" id="book-form" autocomplete="off">
     <div>
       <label for="title">Title</label>
       <input type="text" class="u-full-width" id="title">
