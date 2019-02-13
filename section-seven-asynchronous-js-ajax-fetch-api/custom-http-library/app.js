@@ -42,9 +42,6 @@ http.put('https://jsonplaceholder.typicode.com/posts/7', data, function(err,post
   }
 });
 
-// Update Post
-// http.put()
-
 
 // Delete a psot
 // http.delete('https://jsonplaceholder.typicode.com/posts/1', function (err,response){

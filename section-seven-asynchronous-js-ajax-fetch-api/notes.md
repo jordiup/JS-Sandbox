@@ -35,6 +35,9 @@ Very general; but essentially a contract provided by one piece of software to an
 We've dealt with callback functions quite a bit already. They are functions that are parsed in as a parameter to another function and runs within it. This helps to prevent variables being returned before being caught. Callbacks make returns asynchronous.
 
 
+## ES6 Promises
+Part of the es6 standard, an alternative to callbacks. While they're handling asynchronous operations they can promise to do something when complete. We handle a promise response with a '.then' i.e. 'someFunction.then()'.
+
 
 
 <!-- ##  -->
