@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "John Doe",
+    "company": "Cool Dude Incorporated",
+    "phone": "0418943271"
+  },
+  {
+    "id": 2,
+    "name": "Jimmy B",
+    "company": "Student",
+    "phone": "0418328911"
+  },
+  {
+    "id": 3,
+    "name": "Mike K",
+    "company": "Big Tech No. 4",
+    "phone": "n/a"
+  },
+  {
+    "id": 4,
+    "name": "Sue Z",
+    "company": "Big Tech No. 2",
+    "phone": "n/a"
+  }
+]
