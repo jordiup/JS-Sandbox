@@ -17,7 +17,6 @@ Async code can be achieved by working with callbacks, promises, or async/await.
 - It does not interfere with the current page
 
 ## Rest APIs and HTTP Requests
-
 So far we've look at how to fetch data from a local file, json files, and external APIs and now we'll be looking REST APIs.
 
 API stands for Application Programming Interface. Many devices have different types of APIS.
@@ -31,5 +30,11 @@ Very general; but essentially a contract provided by one piece of software to an
 - Objects could be a blog post, a user etc. They're usually stored in a database.
 - We can create with a POST request, delete with a DELETE request, also can PUT, HEAD, OPTIONS, PATCH etc.
 - Because REST operates with just HTTP requests and usually some standard like JSON it can be used in a variety of languages
+
+## Callback functions
+We've dealt with callback functions quite a bit already. They are functions that are parsed in as a parameter to another function and runs within it. This helps to prevent variables being returned before being caught. Callbacks make returns asynchronous.
+
+
+
 
 <!-- ##  -->
