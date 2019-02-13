@@ -47,6 +47,7 @@ function getExternal(){
     .then(function(data){
       console.log(data);
       let output = '';
+      output += '<p><i>Data fetched from api.github.com</i> 🌞</p>'
       data.forEach(function(user) {
         output += `<li>${user.login}</li>`;
       });
