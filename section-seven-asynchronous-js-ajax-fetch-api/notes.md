@@ -38,6 +38,9 @@ We've dealt with callback functions quite a bit already. They are functions that
 ## ES6 Promises
 Part of the es6 standard, an alternative to callbacks. While they're handling asynchronous operations they can promise to do something when complete. We handle a promise response with a '.then' i.e. 'someFunction.then()'.
 
+## Async await
+Actually an es7 (2016) standard, implemented in Google Chrome browser.
+
 
 
 <!-- ##  -->
