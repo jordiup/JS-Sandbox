@@ -16,8 +16,12 @@ Each of the following folders contains one section from the course:
  - [es5 version ✅](https://jordiup.github.io/js_sandbox/section-six-oop-project/es5/)
  - [es6 version ✅](https://jordiup.github.io/js_sandbox/section-six-oop-project/es6/)
 
-7. Asynchronous JavaScript, Ajax & Fetch API (14/15) 🚧🏗👷
+7. Asynchronous JavaScript, Ajax & Fetch API (15/15) ✅
+
 8. API projects (0/0) 🚧🏗👷
+ - [GitHub User Search](https://jordiup.github.io/js_sandbox/section-eight-api-projects/github-finder/)
+ - [WeatherJS](https://jordiup.github.io/js_sandbox/section-eight-api-projects/github-finder/)
+
 
 Later there will be more projects in this repo.
 
