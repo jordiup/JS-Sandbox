@@ -20,7 +20,7 @@ Each of the following folders contains one section from the course:
 
 8. API projects (0/0) 🚧🏗👷
  - [GitHub User Search](https://jordiup.github.io/js_sandbox/section-eight-api-projects/github-finder/)
- - [WeatherJS](https://jordiup.github.io/js_sandbox/section-eight-api-projects/github-finder/)
+ - [WeatherJS](https://jordiup.github.io/js_sandbox/section-eight-api-projects/weather-js/)
 
 
 Later there will be more projects in this repo.
