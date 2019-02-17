@@ -1,8 +1,13 @@
 # 🌟 Modern JavaScript From The Beginning ⭐
 The purpose of this repo is to document my progress of [_'Modern JavaScript From The Beginning'_](https://www.udemy.com/modern-javascript-from-the-beginning/) - an Udemy course instructed by Traversy Media.
 
+Here are some examples of my work so far!
 
-Each of the following folders contains one section from the course:
+![](preview-imgs/preview-1.gif)
+
+
+Each of the following folders contains one section from the course, with hyperlinks to relevant live projects:
+
 <!-- 1. ~~Intro & Getting Started~~ -->
 2. JavaScript Language Fundamentals (17/17) ✅
 3. DOM Manipulation & Events (12/12) ✅
