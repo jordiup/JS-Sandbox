@@ -18,9 +18,15 @@ Each of the following folders contains one section from the course:
 
 7. Asynchronous JavaScript, Ajax & Fetch API (15/15) ✅
 
-8. API projects (0/0) 🚧🏗👷
- - [GitHub User Search](https://jordiup.github.io/js_sandbox/section-eight-api-projects/github-finder/)
- - [WeatherJS](https://jordiup.github.io/js_sandbox/section-eight-api-projects/weather-js/)
+8. API projects (9/9)
+ - [GitHub User Search ✅](https://jordiup.github.io/js_sandbox/section-eight-api-projects/github-finder/)
+ - [WeatherJS ✅](https://jordiup.github.io/js_sandbox/section-eight-api-projects/weather-js/)
+
+9. Error Handling & Regular Expressions (1/6) 🚧🏗👷
+
+<!-- 10. Other Newer Features - ES2015+ (0/6) 🚧🏗👷 -->
+
+<!-- 11. JavaScript Patterns (0/6) 🚧🏗👷 -->
 
 
 Later there will be more projects in this repo.
