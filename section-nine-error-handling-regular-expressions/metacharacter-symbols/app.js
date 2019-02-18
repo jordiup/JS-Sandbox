@@ -32,12 +32,26 @@ re = /hello/;
 
 
 // Parenthesis () - Grouping
-re = /([0-9]x){3}/;  // (number x) 3 times 
+  re = /([0-9]x){3}/;  // (number x) 3 times
 
+// Short hand chracter classes
+  re = /\w/;    // forward slash w - word character
+  re = /\w+/;    // + = one or more
+  re = /\WW/;    // non-word character
+  re = /\d+/;    // match any digit
+  re = /\D/;     // match any non-digit
+  re = /\S/;     // match any non-white-space char
+  re = /Hell\b/i; // word boundary
+
+// Assertions
+  re = /x(?=y)/;  // match x only if followed by y
+  re = /x(?!y)/;  // match x only if NOT followed by y
 
 // String to match
 let str = 'Hello World';
 str = 'gray';
+str = 'x';
+str = 'xy';
 
 // Log results
 const result = re.exec(str);
