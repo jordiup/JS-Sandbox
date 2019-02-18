@@ -67,12 +67,6 @@ function validatePhone(){
 
 function getQuote(){
   console.log('working');
-  // const quote = document.getElementById('quote');
-  // quote.innerHTML = 'cat';
-  //
-  // const response = fetch(`https://quotes.rest/qod.json?category=inspire`);
-  //
-  // console.log(response);
 
   fetch('https://quotes.rest/qod')
     .then(function(res){
