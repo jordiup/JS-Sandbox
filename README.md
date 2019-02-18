@@ -27,7 +27,9 @@ Each of the following folders contains one section from the course, with hyperli
  - [GitHub User Search ✅](https://jordiup.github.io/js_sandbox/section-eight-api-projects/github-finder/)
  - [WeatherJS ✅](https://jordiup.github.io/js_sandbox/section-eight-api-projects/weather-js/)
 
-9. Error Handling & Regular Expressions (1/6) 🚧🏗👷
+9. Error Handling & Regular Expressions (6/6) ✅
+ - [Form Validation Project ✅](https://jordiup.github.io\js_sandbox\section-nine-error-handling-regular-expressions\form-validation-project\)
+
 
 <!-- 10. Other Newer Features - ES2015+ (0/6) 🚧🏗👷 -->
 

@@ -34,7 +34,7 @@ re = /hello/;
 // Parenthesis () - Grouping
   re = /([0-9]x){3}/;  // (number x) 3 times
 
-// Short hand chracter classes
+// Short hand word chracter classes
   re = /\w/;    // forward slash w - word character
   re = /\w+/;    // + = one or more
   re = /\WW/;    // non-word character
