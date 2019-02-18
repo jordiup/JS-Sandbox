@@ -31,7 +31,8 @@ Each of the following folders contains one section from the course, with hyperli
  - [Form Validation Project ✅](https://jordiup.github.io/js_sandbox/section-nine-error-handling-regular-expressions/form-validation-project/)
 
 
-10. Other Newer Features - ES2015+ (1/6) 🚧🏗👷
+10. Other Newer Features - ES2015+ (2/6) 🚧🏗👷
+ - [Profile Scroller - iterator mini project ✅](https://jordiup.github.io/js_sandbox/section-ten-es2015plus/iterator-mini-project/)
 
 11. JavaScript Patterns (0/6) 🚧🏗👷
 
