@@ -5,3 +5,6 @@ Both different but used in similar ways; to iterate through things. You can call
 
 ## Destructuring
 Introduced in ES6, gives us an easy way to assign variables and extract variables from arrays and frameworks. Any kind of modularised JS will use this such as Reaact.
+
+## Sets
+A list/set of unique values of any type (primitive or reference). 
