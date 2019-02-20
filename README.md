@@ -34,11 +34,11 @@ Each of the following folders contains one section from the course, with hyperli
 10. Other Newer Features - ES2015+ (6/6) ✅
  - [Profile Scroller - iterator mini project ✅](https://jordiup.github.io/js_sandbox/section-ten-es2015plus/iterator-mini-project/)
 
-11. JavaScript Patterns (0/6) 🚧🏗👷
+11. JavaScript Patterns (2/6) 🚧🏗👷
 
-12. Tracalorie Project - using the module pattern (0/12) 🚧🏗👷
+12. Tracalorie Project - using the module pattern (1/12) 🚧🏗👷
 
-13. Microposts Project - CRUD Front End, Webpack & Babel (0/9) 🚧🏗👷
+13. Microposts Project - CRUD Front End, Webpack & Babel (1/9) 🚧🏗👷
 
 
 
