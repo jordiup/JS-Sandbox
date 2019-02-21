@@ -19,3 +19,6 @@ Often used in application to manage and maintain collections of object that are 
 
 ## Observer
 Allows us to unsubscribe from certain events or certain functionality. Can be used to notify the DOM of certain events to be updated, AngularJS also relies heavily on this pattern through event management. Powerful as it allows you to add many new events; see my subscriber example!
+
+## Mediator
+Behavioural pattern like the observer, idea is to have a mediator to interface with colleagues; mediated objects. A good use case is with a chat room. You could use sockets for such a project but is beyond this tutorial.
