@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>RunTrak | Running Tracker</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+  <style>
+    button {
+      //font-weight:bold;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav bar -->
+  <nav>
+    <div class="nav-wrapper blue">
+      <div class="container">
+        <a href="#" class="brand-logo centre"><i class="fas fa-running fa-1x"></i><b>RunTrak</b></a>
+        <ul class="right">
+          <li><a href="#" class="clear-btn btn blue lighten-3"><b>Clear All</b></a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+<br>
+
+<div class="container">
+  <!-- <div style="width:100%;height:0;padding-bottom:42%;position:relative;border-radius:6px;"><iframe src="https://giphy.com/embed/l2Sqc3POpzkj5r8SQ" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div> -->
+
+  <!-- Form card -->
+  <div class="card">
+    <div class="card-content">
+      <span class="card-title">Add a run</span>
+      <form class="col">
+        <div class="row">
+          <div class="input-field col s6">
+            <input type="text" placeholder="Give your run a name" id="item-name">
+            <label for="item-name">Name</label>
+          </div>
+          <div class="input-field col s6">
+            <input type="text" placeholder="How far did you run?" id="item-distance">
+            <label for="item-name">Distance</label>
+          </div>
+          <button class="add-btn btn blue"><i class="fa fa-plus"></i> Add your run</button>
+          <!-- <button class="add-btn btn orange"><i class="fa fa-edit"></i> Update</button> -->
+          <!-- <button class="delete-btn btn green"><i class="fa fa-eraser"></i> Delete your run</button> -->
+          <button class="back-btn btn grey darken-2"  style="float:right"><i class="fa fa-chevron-circle-left"></i> Back</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Total distance -->
+  <h3 class="center-allign">Total Distance: <span class="total-distance">0</span></h3>
+
+  <!-- Item list -->
+  <ul id="item-list" class="collection">
+    <!-- <li class="collection-item" id="item-0">
+      <strong>Night run</strong> <em>5.4km</em>
+      <a href="#" class="secondary-content">
+        <i class="fa fa-edit"></i>
+      </a>
+    </li> -->
+  </ul>
+
+</div>
+
+  <!-- jQuery and Materialize -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>
