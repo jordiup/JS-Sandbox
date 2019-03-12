@@ -57,6 +57,19 @@ const ItemCtrl = (function(){
       });
       return found;
     },
+    updateItem: function(name, distance){
+      // Distance to number
+      distance = parseInt(distance);
+      let found = null;
+      data.items.forEach(function(item){
+        if(item.id === data.currentItem.id){
+          item.name = name;
+          item.distance = distance;
+          found = item;
+        }
+      });
+      return found;
+    },
     setCurrentItem: function(item){
       data.currentItem = item;
     },
@@ -92,6 +105,7 @@ const StrCtrl = (function(){
 const UICtrl = (function(){
   const UISelectors = {
     itemList: `#item-list`,
+    listItems: `#item-list li`,
     addBtn: `.add-btn`,
     updateBtn: `.update-btn`,
     deleteBtn: `.delete-btn`,
@@ -165,6 +179,24 @@ const UICtrl = (function(){
      document.querySelector(UISelectors.itemDistance).value = ItemCtrl.getCurrentItem().distance;
      UICtrl.showEditState();
    },
+   updateListItem: function(item){
+    let listItems = document.querySelectorAll(UISelectors.listItems);
+
+    // Turn node list into an array
+    listItems = Array.from(listItems);
+    listItems.forEach(function(listItem){
+      const itemID = listItem.getAttribute('id');
+
+      if(itemID === `item-${item.id}`){
+        document.querySelector(`#${itemID}`).innerHTML = `
+          <strong>${item.name}</strong> <em>${item.distance / 1000}km</em>
+          <a href="#" class="secondary-content">
+            <i class="fa fa-edit edit-item"></i>
+          </a>
+        `;
+      }
+    })
+   },
    clearInput: function(){
      document.querySelector(UISelectors.itemName).value = '';
      document.querySelector(UISelectors.itemDistance).value = '';
@@ -189,16 +221,31 @@ const App = (function(ItemCtrl, UICtrl){
       // Add item event
       document.querySelector(UISelectors.addBtn).addEventListener('click', itemAddSubmit);
 
+      // Disable submit on enter
+      document.addEventListener('keypress', function(e){
+        // "if keycode is 'enter' or if it was hit..."
+        if(e.keyCode === 13 || e.which === 13){
+          e.preventDefault();
+          return false;
+        }
+      })
+
       // Edit icon click event
-      document.querySelector(UISelectors.itemList).addEventListener('click',itemUpdateSubmit);
-  }
+      document.querySelector(UISelectors.itemList).addEventListener('click',itemEditClick);
+
+      // Item update submit
+      document.querySelector(UISelectors.updateBtn).addEventListener('click',itemUpdateSubmit);
+
+      // Back button event
+      document.querySelector(UISelectors.backBtn).addEventListener('click',UICtrl.clearEditState);
+}
 
   // Add item submit
   const itemAddSubmit = function(e){
     e.preventDefault();
     // Get form input from UI controller
     const input = UICtrl.getItemInput();
-    // Form validation, check for name and calorie input
+    // Form validation, check for name and distance input
     if(input.name !== '' && !isNaN(input.distance)){
       // Add item
       const newItem = ItemCtrl.addItem(input.name, input.distance);
@@ -220,8 +267,8 @@ const App = (function(ItemCtrl, UICtrl){
     console.log('Add', input);
   }
 
-  // Update item submit
-  const itemUpdateSubmit = function(e){
+  // Item edit click
+  const itemEditClick = function(e){
 
     if(e.target.classList.contains('edit-item')){
 
@@ -248,6 +295,22 @@ const App = (function(ItemCtrl, UICtrl){
     e.preventDefault();
   }
 
+  // Update item submit
+  const itemUpdateSubmit = function(e){
+    e.preventDefault();
+    // Get item update
+    const input = UICtrl.getItemInput();
+    // Update item
+    const updatedItem = ItemCtrl.updateItem(input.name, input.distance);
+    // Update UI
+    UICtrl.updateListItem(updatedItem);
+    // Get total distance
+    const totalDistance = ItemCtrl.getTotalDistance();
+    // Add total distance to UI
+    UICtrl.showTotalDistance(totalDistance);
+    // Clear edit state
+    UICtrl.clearEditState();
+  }
 
   // Public methods
   return {
