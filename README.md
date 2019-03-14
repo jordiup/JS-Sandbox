@@ -37,7 +37,7 @@ Each of the following folders contains one section from the course, with hyperli
 11. JavaScript Patterns (6/6) ✅
  - [State pattern - drop-down menu example](https://jordiup.github.io/js_sandbox/section-eleven-js-patterns/state/index.html)
 
-12. Tracalorie Project - using the module pattern (1/12) 🚧🏗👷
+12. Tracalorie Project - using the module pattern (9/12) 🚧🏗👷
 
 13. Microposts Project - CRUD Front End, Webpack & Babel (1/9) 🚧🏗👷
 

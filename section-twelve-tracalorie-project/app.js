@@ -70,6 +70,18 @@ const ItemCtrl = (function(){
       });
       return found;
     },
+    deleteItem: function(id){
+      // Get ids
+      const ids = data.items.map(function(item){
+        return item.id;
+      });
+
+      // Get index
+      const index = ids.indexOf(id);
+
+      // Remove item
+      data.items.splice(index, 1);
+    },
     setCurrentItem: function(item){
       data.currentItem = item;
     },
@@ -122,7 +134,7 @@ const UICtrl = (function(){
      items.forEach(function(item){
          html += `
            <li id="item-${item.id}" class="collection-item">
-             <strong>${item.name}</strong> <em>${item.distance / 1000}km</em>
+             <strong>${item.name}</strong> <em>${item.distance }km</em>
              <a href="#" class="secondary-content">
                <i class="fa fa-edit edit-item"></i>
              </a>
@@ -133,11 +145,13 @@ const UICtrl = (function(){
      // Insert list item
      document.querySelector(UISelectors.itemList).innerHTML = html;
    },
-   clearEditState: function(){
+   clearEditState: function(e){
      document.querySelector(UISelectors.updateBtn).style.display = 'none';
      document.querySelector(UISelectors.deleteBtn).style.display = 'none';
      document.querySelector(UISelectors.backBtn).style.display = 'none';
      document.querySelector(UISelectors.addBtn).style.display = 'inline';
+     // UICtrl.clearInput();
+
    },
    showEditState: function(){
      document.querySelector(UISelectors.updateBtn).style.display = 'inline';
@@ -166,7 +180,7 @@ const UICtrl = (function(){
      li.id = `item-${item.id}`;
      // Add HTML
      li.innerHTML = `
-       <strong>${item.name}</strong> <em>${item.distance / 1000}km</em>
+       <strong>${item.name}</strong> <em>${item.distance}km</em>
        <a href="#" class="secondary-content">
          <i class="fa fa-edit edit-item"></i>
        </a>
@@ -189,13 +203,18 @@ const UICtrl = (function(){
 
       if(itemID === `item-${item.id}`){
         document.querySelector(`#${itemID}`).innerHTML = `
-          <strong>${item.name}</strong> <em>${item.distance / 1000}km</em>
+          <strong>${item.name}</strong> <em>${item.distance }km</em>
           <a href="#" class="secondary-content">
             <i class="fa fa-edit edit-item"></i>
           </a>
         `;
       }
     })
+   },
+   deleteListItem: function(id){
+     const itemID = `#item-${id}`;
+     const item = document.querySelector(itemID);
+     item.remove();
    },
    clearInput: function(){
      document.querySelector(UISelectors.itemName).value = '';
@@ -214,7 +233,9 @@ const UICtrl = (function(){
 const App = (function(ItemCtrl, UICtrl){
 
   // Load event listeners
-  const loadEventListeners = function(){
+  const loadEventListeners = function(e){
+      console.log('listeners');
+
       // Get UI Selectors
       const UISelectors = UICtrl.getSelectors();
 
@@ -228,7 +249,7 @@ const App = (function(ItemCtrl, UICtrl){
           e.preventDefault();
           return false;
         }
-      })
+      });
 
       // Edit icon click event
       document.querySelector(UISelectors.itemList).addEventListener('click',itemEditClick);
@@ -238,6 +259,10 @@ const App = (function(ItemCtrl, UICtrl){
 
       // Back button event
       document.querySelector(UISelectors.backBtn).addEventListener('click',UICtrl.clearEditState);
+
+      // Delete item event
+      document.querySelector(UISelectors.deleteBtn).addEventListener('click',itemDeleteSubmit);
+
 }
 
   // Add item submit
@@ -310,12 +335,43 @@ const App = (function(ItemCtrl, UICtrl){
     UICtrl.showTotalDistance(totalDistance);
     // Clear edit state
     UICtrl.clearEditState();
+    // Clear inputs
+    if(input.name !== '' && !isNaN(input.distance)){
+      UICtrl.clearInput();
+    }
+  }
+
+  const itemDeleteSubmit = function(e){
+    // Get current item
+    const currentItem = ItemCtrl.getCurrentItem();
+
+    // Delete from data structure
+    ItemCtrl.deleteItem(currentItem.id);
+
+    // Delete from UI
+    UICtrl.deleteListItem(currentItem.id);
+
+    // Get total distance
+    const totalDistance = ItemCtrl.getTotalDistance();
+
+    // Add total distance to UI
+    UICtrl.showTotalDistance(totalDistance);
+
+    // Clear edit state
+    UICtrl.clearEditState();
+
+    const input = UICtrl.getItemInput();
+    if(input.name !== '' && !isNaN(input.distance)){
+      UICtrl.clearInput();
+    }
+
+    e.preventDefault();
   }
 
   // Public methods
   return {
     init: function(){
-      console.log('Initializing app...')
+      console.log('Initializing app...');
 
       // Clear edit state
       UICtrl.clearEditState();
@@ -339,6 +395,53 @@ const App = (function(ItemCtrl, UICtrl){
   }
 
 })(ItemCtrl, UICtrl);
+
+
+// Initialize and add the map
+function initMap() {
+  // The location of Uluru
+  var uluru = {lat: -25.344, lng: 131.036};
+  // The map, centered at Uluru
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 4,
+    center: uluru,
+    gestureHandling: "cooperative",
+    streetViewControl: false,
+    mapTypeControl: false,
+  });
+
+  map.addListener('click', function(e) {
+    placeMarker(e.latLng, map);
+  });
+
+  let count = 0;
+  let marker = null;
+
+  function placeMarker(position, map) {
+
+    if (count == 0){
+        marker = new google.maps.Marker({
+          position: position,
+          map: map
+      });
+      map.panTo(position);
+      count++;
+      console.log(count);
+      console.log(marker);
+    }
+    else {
+      marker.setMap(null);
+
+      marker.setMap(map);
+      marker.setPosition(position);
+      map.panTo(position);
+    }
+
+  }
+}
+
+
+initMap();
 
 // Initialize app
 App.init();
