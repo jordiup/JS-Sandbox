@@ -3,10 +3,11 @@
 // Item Controller
 const ItemCtrl = (function(){
   // Item constructor
-  const Item = function(id,name,distance){
+  const Item = function(id,name,distance,latlng){
     this.id = id;
     this.name = name;
     this.distance = distance;
+	  this.latlng = latlng;
   }
 
   // Data Structure/ State
@@ -29,7 +30,7 @@ const ItemCtrl = (function(){
     logData: function(){
       return data;
     },
-    addItem: function(name, distance){
+    addItem: function(name, distance, latlng){
       let ID;
       // Create ID
       if(data.items.length >0){
@@ -41,7 +42,7 @@ const ItemCtrl = (function(){
       // Parse the distance as a number
       distance = parseFloat(distance);
       // Create a new item
-      newItem = new Item(ID, name, distance);
+      newItem = new Item(ID, name, distance, latlng);
       // Add to items array
       data.items.push(newItem);
 
@@ -65,6 +66,7 @@ const ItemCtrl = (function(){
         if(item.id === data.currentItem.id){
           item.name = name;
           item.distance = distance;
+		  item.latlng = latlng;
           found = item;
         }
       });
@@ -119,13 +121,19 @@ const UICtrl = (function(){
     itemList: `#item-list`,
     listItems: `#item-list li`,
     addBtn: `.add-btn`,
+	  locBtn: `.btn-loc`,
+    locText: `p`,
     updateBtn: `.update-btn`,
     deleteBtn: `.delete-btn`,
     backBtn: `.back-btn`,
     itemName: `#item-name`,
     itemDistance: `#item-distance`,
     totalDistance: `.total-distance`,
+    mapping: `.mapping`,
+	  latlng: `.latlng`,
   }
+
+  let mapIsOpen = true;
 
  return{
    populateItemList: function(items){
@@ -139,6 +147,7 @@ const UICtrl = (function(){
                <i class="fa fa-edit edit-item"></i>
              </a>
            </li>
+			<i class="secondary-content">${item.latlng}</i>
          `;
      });
 
@@ -166,7 +175,8 @@ const UICtrl = (function(){
    getItemInput: function(){
      return {
        name: document.querySelector(UISelectors.itemName).value,
-       distance: document.querySelector(UISelectors.itemDistance).value
+       distance: document.querySelector(UISelectors.itemDistance).value,
+	   latlng: document.querySelector(UISelectors.latlng).innerHTML
      }
    },
    addListItem: function(item){
@@ -184,6 +194,8 @@ const UICtrl = (function(){
        <a href="#" class="secondary-content">
          <i class="fa fa-edit edit-item"></i>
        </a>
+	   <span class="secondary-content">${('' + item.latlng).length > 12 ? '📍' : '' + item.latlng}&nbsp;&nbsp;</span>
+	   <!-- <i class="secondary-content">${item.latlng}</i> -- >
      `;
      // Insert item
      document.querySelector(UISelectors.itemList).insertAdjacentElement('beforeend', li);
@@ -203,10 +215,11 @@ const UICtrl = (function(){
 
       if(itemID === `item-${item.id}`){
         document.querySelector(`#${itemID}`).innerHTML = `
-          <strong>${item.name}</strong> <em>${item.distance }km</em>
+          <strong>${item.name}</strong> <em>${item.distance}km</em>
           <a href="#" class="secondary-content">
             <i class="fa fa-edit edit-item"></i>
           </a>
+		  <i class="secondary-content">${item.latlng}</i>
         `;
       }
     })
@@ -225,7 +238,17 @@ const UICtrl = (function(){
    },
    showTotalDistance: function(totalDistance){
      document.querySelector(UISelectors.totalDistance).textContent = totalDistance+'km';
+   },
+   mapToggle: function(){
+     if (mapIsOpen == true){
+       document.querySelector(UISelectors.mapping).style.display = 'none';
+       mapIsOpen = false;
+     } else {
+       document.querySelector(UISelectors.mapping).style.display = 'block';
+       mapIsOpen = true;
+     }
    }
+
  };
 })();
 
@@ -241,6 +264,9 @@ const App = (function(ItemCtrl, UICtrl){
 
       // Add item event
       document.querySelector(UISelectors.addBtn).addEventListener('click', itemAddSubmit);
+
+	     // Add location button (show maps)
+      document.querySelector(UISelectors.locBtn).addEventListener('click', showMapBtn);
 
       // Disable submit on enter
       document.addEventListener('keypress', function(e){
@@ -258,12 +284,19 @@ const App = (function(ItemCtrl, UICtrl){
       document.querySelector(UISelectors.updateBtn).addEventListener('click',itemUpdateSubmit);
 
       // Back button event
-      document.querySelector(UISelectors.backBtn).addEventListener('click',UICtrl.clearEditState);
+      document.querySelector(UISelectors.locBtn).addEventListener('click',UICtrl.clearEditState);
 
       // Delete item event
       document.querySelector(UISelectors.deleteBtn).addEventListener('click',itemDeleteSubmit);
 
 }
+
+  // Add location click
+  const showMapBtn = function(e){
+    e.preventDefault();
+    UICtrl.mapToggle();
+  }
+
 
   // Add item submit
   const itemAddSubmit = function(e){
@@ -273,7 +306,7 @@ const App = (function(ItemCtrl, UICtrl){
     // Form validation, check for name and distance input
     if(input.name !== '' && !isNaN(input.distance)){
       // Add item
-      const newItem = ItemCtrl.addItem(input.name, input.distance);
+      const newItem = ItemCtrl.addItem(input.name, input.distance, input.latlng);
       // Add itme to UI list
       UICtrl.addListItem(newItem);
       // Get total distance
@@ -326,7 +359,7 @@ const App = (function(ItemCtrl, UICtrl){
     // Get item update
     const input = UICtrl.getItemInput();
     // Update item
-    const updatedItem = ItemCtrl.updateItem(input.name, input.distance);
+    const updatedItem = ItemCtrl.updateItem(input.name, input.distance, input.latlng);
     // Update UI
     UICtrl.updateListItem(updatedItem);
     // Get total distance
@@ -417,7 +450,22 @@ function initMap() {
   let count = 0;
   let marker = null;
 
+  // function resetMap(){
+  //   marker = new google.maps.Marker({
+  //       position: this.uluru,
+  //       map: this.map
+  //   });
+  //
+  //   marker.setMap(null);
+  //   marker.setMap(map);
+  //   document.querySelector('.latlng').innerHTML = '&nbsp;';
+  // }
+
   function placeMarker(position, map) {
+	 let lat = position.lat();
+	 let lng = position.lng();
+
+	 document.querySelector('.latlng').innerHTML = lat + ', ' + lng;
 
     if (count == 0){
         marker = new google.maps.Marker({
@@ -435,9 +483,13 @@ function initMap() {
       marker.setMap(map);
       marker.setPosition(position);
       map.panTo(position);
-    }
 
+      // resetMap();
+    }
   }
+
+
+
 }
 
 
