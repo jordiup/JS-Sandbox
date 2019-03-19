@@ -10,14 +10,17 @@ const ItemCtrl = (function(){
 	  this.latlng = latlng;
   }
 
+  // items template data for initial testing
+  // items = [
+    //  {id: 0, name: 'Night run', distance: 1200},
+    //   {id: 1, name: 'Morning run', distance: 3000},
+    //  {id: 2, name: 'Night run 2', distance: 1800}
+    // ],
+
   // Data Structure/ State
   const data = {
-    items: [
-      // Template data for initial testing
-      // {id: 0, name: 'Night run', distance: 1200},
-      // {id: 1, name: 'Morning run', distance: 3000},
-      // {id: 2, name: 'Night run 2', distance: 1800}
-    ],
+    // items: StorageCtrl.getItemsFromStorage(),
+    items: [],
     currentItem: null, // when we update
     totalDistance: 0
   }
@@ -84,6 +87,9 @@ const ItemCtrl = (function(){
       // Remove item
       data.items.splice(index, 1);
     },
+    clearAllItems: function(){
+      data.items = [];
+    },
     setCurrentItem: function(item){
       data.currentItem = item;
     },
@@ -111,8 +117,39 @@ const ItemCtrl = (function(){
 })(); // in order for this to invoke you need another pair of parethesis
 
 // Storage controller
-const StrCtrl = (function(){
- return{};
+const StorageCtrl = (function(){
+ // Public methods
+ return{
+   storeItem: function(item){
+     let items = [];
+     // Check if any items in LS
+     if(localStorage.getItem('items') === null){
+       items = [];
+       // Push new item
+       items.push(item);
+       // Set ls
+       localStorage.setItem('items', JSON.stringify(items));
+     } else {
+       items = JSON.parse(localStorage.getItem('items'));
+
+       // Push new item
+       items.push(item);
+
+       // Reset ls
+       localStorage.setItem('items', JSON.stringify(items));
+     }
+   },
+   getItemsFromStorage: function(){
+     console.log(123);
+     if(localStorage.getItem('items') === null){
+       items = [];
+     } else {
+       items = JSON.parse(localStorage.getItem('items'));
+     }
+     return items;
+   }
+ }
+
 })();
 
 // UI Controller
@@ -126,6 +163,7 @@ const UICtrl = (function(){
     updateBtn: `.update-btn`,
     deleteBtn: `.delete-btn`,
     backBtn: `.back-btn`,
+    clearBtn: `.clear-btn`,
     itemName: `#item-name`,
     itemDistance: `#item-distance`,
     totalDistance: `.total-distance`,
@@ -163,6 +201,8 @@ const UICtrl = (function(){
 
    },
    showEditState: function(){
+     document.querySelector(UISelectors.mapping).style.display = 'none';
+     document.querySelector(UISelectors.locBtn).style.display = 'none';
      document.querySelector(UISelectors.updateBtn).style.display = 'inline';
      document.querySelector(UISelectors.deleteBtn).style.display = 'inline';
      document.querySelector(UISelectors.backBtn).style.display = 'inline';
@@ -204,6 +244,16 @@ const UICtrl = (function(){
      document.querySelector(UISelectors.itemName).value = ItemCtrl.getCurrentItem().name;
      document.querySelector(UISelectors.itemDistance).value = ItemCtrl.getCurrentItem().distance;
      UICtrl.showEditState();
+   },
+   removeItems: function(){
+     let listItems = document.querySelectorAll(UISelectors.listItems);
+
+     // Turn node list into an array
+     listItems = Array.from(listItems);
+
+     listItems.forEach(function(item){
+       item.remove();
+     });
    },
    updateListItem: function(item){
     let listItems = document.querySelectorAll(UISelectors.listItems);
@@ -253,7 +303,7 @@ const UICtrl = (function(){
 })();
 
 // App controller
-const App = (function(ItemCtrl, UICtrl){
+const App = (function(ItemCtrl, StorageCtrl, UICtrl){
 
   // Load event listeners
   const loadEventListeners = function(e){
@@ -265,8 +315,8 @@ const App = (function(ItemCtrl, UICtrl){
       // Add item event
       document.querySelector(UISelectors.addBtn).addEventListener('click', itemAddSubmit);
 
-	     // Add location button (show maps)
-      document.querySelector(UISelectors.locBtn).addEventListener('click', showMapBtn);
+      // Add location button (show maps)
+     document.querySelector(UISelectors.locBtn).addEventListener('click', showMapBtn);
 
       // Disable submit on enter
       document.addEventListener('keypress', function(e){
@@ -288,6 +338,9 @@ const App = (function(ItemCtrl, UICtrl){
 
       // Delete item event
       document.querySelector(UISelectors.deleteBtn).addEventListener('click',itemDeleteSubmit);
+
+      // Clear all items
+      document.querySelector(UISelectors.clearBtn).addEventListener('click',clearAllItemsClick);
 
 }
 
@@ -313,7 +366,12 @@ const App = (function(ItemCtrl, UICtrl){
       const totalDistance = ItemCtrl.getTotalDistance();
       // Add total distance to UI
       UICtrl.showTotalDistance(totalDistance);
+      // Store in ls
+      StorageCtrl.storeItem(newItem);
+      // Clear inputs
       UICtrl.clearInput();
+      // Reset the map
+      gMap.resetMap();
     } else {
       // Clear fields
       UICtrl.clearInput();
@@ -401,6 +459,24 @@ const App = (function(ItemCtrl, UICtrl){
     e.preventDefault();
   }
 
+  // Clear Items event
+  const clearAllItemsClick = function(){
+    // Delete all items from datastructure
+    ItemCtrl.clearAllItems();
+
+    // Remove from UI
+    UICtrl.removeItems();
+
+    // Get total distance
+    const totalDistance = ItemCtrl.getTotalDistance();
+
+    // Add total distance to UI
+    UICtrl.showTotalDistance(totalDistance);
+
+    // Hide UL
+    UICtrl.hideList();
+  }
+
   // Public methods
   return {
     init: function(){
@@ -408,6 +484,9 @@ const App = (function(ItemCtrl, UICtrl){
 
       // Clear edit state
       UICtrl.clearEditState();
+
+      // Run initMap
+      gMap.initMap();
 
       // Fetch items from data structure
       const items = ItemCtrl.getItems();
@@ -427,13 +506,17 @@ const App = (function(ItemCtrl, UICtrl){
     }
   }
 
-})(ItemCtrl, UICtrl);
+})(ItemCtrl, StorageCtrl, UICtrl);
 
 
 // Initialize and add the map
-function initMap() {
-  // The location of Uluru
+const gMap = (function(){
+
+  // The location of Uluru adn the default centre of map
   var uluru = {lat: -25.344, lng: 131.036};
+
+  let count = 0;
+  let marker = null;
   // The map, centered at Uluru
   var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 4,
@@ -443,57 +526,48 @@ function initMap() {
     mapTypeControl: false,
   });
 
-  map.addListener('click', function(e) {
-    placeMarker(e.latLng, map);
-  });
+  return {
+      initMap: function(){
 
-  let count = 0;
-  let marker = null;
+        map.addListener('click', function(e) {
+          gMap.placeMarker(e.latLng, map);
+        });
+      },
+      resetMap: function(){
+        console.log('resetmap222');
+        marker.setMap(null);
+        document.querySelector('.latlng').innerHTML = '&nbsp;';
+      },
+      placeMarker: function(position, map) {
+    	 let lat = position.lat();
+    	 let lng = position.lng();
 
-  // function resetMap(){
-  //   marker = new google.maps.Marker({
-  //       position: this.uluru,
-  //       map: this.map
-  //   });
-  //
-  //   marker.setMap(null);
-  //   marker.setMap(map);
-  //   document.querySelector('.latlng').innerHTML = '&nbsp;';
-  // }
+    	 document.querySelector('.latlng').innerHTML = lat + ', ' + lng;
 
-  function placeMarker(position, map) {
-	 let lat = position.lat();
-	 let lng = position.lng();
+        if (count == 0){
+            marker = new google.maps.Marker({
+              position: position,
+              map: map
+          });
+          map.panTo(position);
+          count++;
+          console.log(count);
+          console.log(marker);
+        }
+        else {
+          marker.setMap(null);
 
-	 document.querySelector('.latlng').innerHTML = lat + ', ' + lng;
-
-    if (count == 0){
-        marker = new google.maps.Marker({
-          position: position,
-          map: map
-      });
-      map.panTo(position);
-      count++;
-      console.log(count);
-      console.log(marker);
+          marker.setMap(map);
+          marker.setPosition(position);
+          map.panTo(position);
+        }
+      }
     }
-    else {
-      marker.setMap(null);
 
-      marker.setMap(map);
-      marker.setPosition(position);
-      map.panTo(position);
-
-      // resetMap();
-    }
-  }
+})();
+// initMap(); // not sure if needed anymore
 
 
-
-}
-
-
-initMap();
 
 // Initialize app
 App.init();
