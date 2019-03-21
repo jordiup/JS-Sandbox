@@ -31,19 +31,17 @@ Each of the following folders contains one section from the course, with hyperli
  - [Form Validation Project ✅](https://jordiup.github.io/js_sandbox/section-nine-error-handling-regular-expressions/form-validation-project/)
 
 
-10. Other Newer Features - ES2015+ (6/6) ✅
+10. Other Newer Features - ES2015+ (6/6)
  - [Profile Scroller - iterator mini project ✅](https://jordiup.github.io/js_sandbox/section-ten-es2015plus/iterator-mini-project/)
 
-11. JavaScript Patterns (6/6) ✅
- - [State pattern - drop-down menu example](https://jordiup.github.io/js_sandbox/section-eleven-js-patterns/state/index.html)
+11. JavaScript Patterns (6/6)
+ - [State pattern - drop-down menu example ✅](https://jordiup.github.io/js_sandbox/section-eleven-js-patterns/state/index.html)
 
-12. Tracalorie Project - using the module pattern (9/12) 🚧🏗👷
+12. TraCalorie Project - using the module pattern (12/12)
+ - [RunTrak Project ✅](https://jordiup.github.io/js_sandbox/section-twelve-tracalorie-project/)
 
 13. Microposts Project - CRUD Front End, Webpack & Babel (1/9) 🚧🏗👷
 
-
-
-Later there will be more projects in this repo.
 
 <!-- Misc. -->
 <!-- [here](https://) -->

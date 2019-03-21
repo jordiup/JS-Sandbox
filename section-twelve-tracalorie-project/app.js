@@ -1,5 +1,70 @@
 // Will hold all of our modules (controller modules etc.)
 
+
+// Storage controller
+const StorageCtrl = (function(){
+
+ // Public methods
+ return{
+   storeItem: function(item){
+   let items;
+
+     // Check if any items in LS
+     if(localStorage.getItem('items') === null){
+       items = [];
+       // Push new item
+       items.push(item);
+       // Set ls
+       localStorage.setItem('items', JSON.stringify(items));
+     } else {
+       items = JSON.parse(localStorage.getItem('items'));
+
+       // Push new item
+       items.push(item);
+
+       // Reset ls
+       localStorage.setItem('items', JSON.stringify(items));
+     }
+   },
+   getItemsFromStorage: function(){
+     let items;
+
+     console.log(123);
+     if(localStorage.getItem('items') === null){
+       items = [];
+     } else {
+       items = JSON.parse(localStorage.getItem('items'));
+     }
+     return items;
+   },
+   updateItemStorage: function(updatedItem){
+     let items = JSON.parse(localStorage.getItem('items'));
+
+     items.forEach(function(item, index){
+       if(updatedItem.id === item.id){
+         items.splice(index, 1, updatedItem);
+       }
+     });
+     localStorage.setItem('items', JSON.stringify(items));
+   },
+   deleteItemFromStorage: function(id){
+     let items = JSON.parse(localStorage.getItem('items'));
+
+     items.forEach(function(item, index){
+       if(id === item.id){
+         items.splice(index, 1);
+       }
+     });
+     localStorage.setItem('items', JSON.stringify(items));
+   },
+   clearItemsFromStorage: function(){
+     localStorage.removeItem('items');
+   }
+
+}
+
+})();
+
 // Item Controller
 const ItemCtrl = (function(){
   // Item constructor
@@ -19,8 +84,7 @@ const ItemCtrl = (function(){
 
   // Data Structure/ State
   const data = {
-    // items: StorageCtrl.getItemsFromStorage(),
-    items: [],
+    items: StorageCtrl.getItemsFromStorage(),
     currentItem: null, // when we update
     totalDistance: 0
   }
@@ -69,7 +133,7 @@ const ItemCtrl = (function(){
         if(item.id === data.currentItem.id){
           item.name = name;
           item.distance = distance;
-		  item.latlng = latlng;
+		      // item.latlng = latlng;
           found = item;
         }
       });
@@ -116,41 +180,6 @@ const ItemCtrl = (function(){
 
 })(); // in order for this to invoke you need another pair of parethesis
 
-// Storage controller
-const StorageCtrl = (function(){
- // Public methods
- return{
-   storeItem: function(item){
-     let items = [];
-     // Check if any items in LS
-     if(localStorage.getItem('items') === null){
-       items = [];
-       // Push new item
-       items.push(item);
-       // Set ls
-       localStorage.setItem('items', JSON.stringify(items));
-     } else {
-       items = JSON.parse(localStorage.getItem('items'));
-
-       // Push new item
-       items.push(item);
-
-       // Reset ls
-       localStorage.setItem('items', JSON.stringify(items));
-     }
-   },
-   getItemsFromStorage: function(){
-     console.log(123);
-     if(localStorage.getItem('items') === null){
-       items = [];
-     } else {
-       items = JSON.parse(localStorage.getItem('items'));
-     }
-     return items;
-   }
- }
-
-})();
 
 // UI Controller
 const UICtrl = (function(){
@@ -184,8 +213,8 @@ const UICtrl = (function(){
              <a href="#" class="secondary-content">
                <i class="fa fa-edit edit-item"></i>
              </a>
+             <span class="secondary-content">${('' + item.latlng).length > 6 ? '📍' : '' + item.latlng}&nbsp;&nbsp;</span>
            </li>
-			<i class="secondary-content">${item.latlng}</i>
          `;
      });
 
@@ -197,7 +226,8 @@ const UICtrl = (function(){
      document.querySelector(UISelectors.deleteBtn).style.display = 'none';
      document.querySelector(UISelectors.backBtn).style.display = 'none';
      document.querySelector(UISelectors.addBtn).style.display = 'inline';
-     // UICtrl.clearInput();
+     document.querySelector(UISelectors.locBtn).style.display = 'inline';
+     UICtrl.clearInput();
 
    },
    showEditState: function(){
@@ -234,7 +264,7 @@ const UICtrl = (function(){
        <a href="#" class="secondary-content">
          <i class="fa fa-edit edit-item"></i>
        </a>
-	   <span class="secondary-content">${('' + item.latlng).length > 12 ? '📍' : '' + item.latlng}&nbsp;&nbsp;</span>
+	   <span class="secondary-content">${('' + item.latlng).length > 6 ? '📍' : '' + item.latlng}&nbsp;&nbsp;</span>
 	   <!-- <i class="secondary-content">${item.latlng}</i> -- >
      `;
      // Insert item
@@ -269,10 +299,13 @@ const UICtrl = (function(){
           <a href="#" class="secondary-content">
             <i class="fa fa-edit edit-item"></i>
           </a>
-		  <i class="secondary-content">${item.latlng}</i>
+          <span class="secondary-content">${('' + item.latlng).length > 6 ? '📍' : '' + item.latlng}&nbsp;&nbsp;</span>
         `;
       }
     })
+
+    document.querySelector(UISelectors.locBtn).style.display = 'inline';
+
    },
    deleteListItem: function(id){
      const itemID = `#item-${id}`;
@@ -334,7 +367,7 @@ const App = (function(ItemCtrl, StorageCtrl, UICtrl){
       document.querySelector(UISelectors.updateBtn).addEventListener('click',itemUpdateSubmit);
 
       // Back button event
-      document.querySelector(UISelectors.locBtn).addEventListener('click',UICtrl.clearEditState);
+      document.querySelector(UISelectors.backBtn).addEventListener('click',UICtrl.clearEditState);
 
       // Delete item event
       document.querySelector(UISelectors.deleteBtn).addEventListener('click',itemDeleteSubmit);
@@ -424,6 +457,8 @@ const App = (function(ItemCtrl, StorageCtrl, UICtrl){
     const totalDistance = ItemCtrl.getTotalDistance();
     // Add total distance to UI
     UICtrl.showTotalDistance(totalDistance);
+    // Update LS
+    StorageCtrl.updateItemStorage(updatedItem);
     // Clear edit state
     UICtrl.clearEditState();
     // Clear inputs
@@ -447,6 +482,9 @@ const App = (function(ItemCtrl, StorageCtrl, UICtrl){
 
     // Add total distance to UI
     UICtrl.showTotalDistance(totalDistance);
+
+    // Delte from LS
+    StorageCtrl.deleteItemFromStorage(currentItem.id);
 
     // Clear edit state
     UICtrl.clearEditState();
@@ -472,6 +510,9 @@ const App = (function(ItemCtrl, StorageCtrl, UICtrl){
 
     // Add total distance to UI
     UICtrl.showTotalDistance(totalDistance);
+
+    // Clear from LS
+    StorageCtrl.clearItemsFromStorage();
 
     // Hide UL
     UICtrl.hideList();
@@ -499,6 +540,12 @@ const App = (function(ItemCtrl, StorageCtrl, UICtrl){
         UICtrl.populateItemList(items);
       }
 
+      // Get total distance
+      const totalDistance = ItemCtrl.getTotalDistance();
+
+      // Add total distance to UI
+      UICtrl.showTotalDistance(totalDistance);
+
       // Load event listeners
       loadEventListeners();
 
@@ -512,15 +559,15 @@ const App = (function(ItemCtrl, StorageCtrl, UICtrl){
 // Initialize and add the map
 const gMap = (function(){
 
-  // The location of Uluru adn the default centre of map
-  var uluru = {lat: -25.344, lng: 131.036};
+  // The location of Perth and the default centre of map
+  var perth = {lat: -31.9530, lng: 115.8546};
 
   let count = 0;
   let marker = null;
-  // The map, centered at Uluru
+  // The map, centered in Perth
   var map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 4,
-    center: uluru,
+    zoom: 12,
+    center: perth,
     gestureHandling: "cooperative",
     streetViewControl: false,
     mapTypeControl: false,
@@ -534,15 +581,15 @@ const gMap = (function(){
         });
       },
       resetMap: function(){
-        console.log('resetmap222');
         marker.setMap(null);
+        console.log('resetmap222');
         document.querySelector('.latlng').innerHTML = '&nbsp;';
       },
       placeMarker: function(position, map) {
     	 let lat = position.lat();
     	 let lng = position.lng();
 
-    	 document.querySelector('.latlng').innerHTML = lat + ', ' + lng;
+    	 document.querySelector('.latlng').innerHTML = lat.toFixed(4) + ', ' + lng.toFixed(4);
 
         if (count == 0){
             marker = new google.maps.Marker({
@@ -561,7 +608,7 @@ const gMap = (function(){
           marker.setPosition(position);
           map.panTo(position);
         }
-      }
+      },
     }
 
 })();
