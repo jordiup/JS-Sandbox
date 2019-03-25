@@ -13,6 +13,9 @@ document.querySelector('.post-submit').addEventListener('click', submitPost);
 // Listen for delete
 document.querySelector('#posts').addEventListener('click',deletePost);
 
+// Listen for edit state
+document.querySelector('#posts').addEventListener('click',enableEdit);
+
 function getPosts() {
   http.get(base + 'posts')
   // .then(data => console.log(data))
@@ -26,19 +29,27 @@ function submitPost(){
   const title = document.querySelector('#title').value;
   const body = document.querySelector('#body').value;
 
-  const data = {
-    title,
-    body
-  };
+  if(title === '' || body === ''){
+    showAlert('Please fill in all fields', 'alert alert-danger');
+  } else {
+      const data = {
+        id,
+        title,
+        body
+      };
 
-  // Create Post
-  http.post(base + 'posts', data)
-    .then(data => {
-      ui.showAlert('Post added', 'alert alert-success');
-      ui.clearFields();
-      getPosts();
-    })
-    .catch(err => console.log(err));
+      // Fill form with current post
+      ui.fillForm(data);
+
+      // Create Post
+      http.post(base + 'posts', data)
+        .then(data => {
+          ui.showAlert('Post added', 'alert alert-success');
+          ui.clearFields();
+          getPosts();
+        })
+        .catch(err => console.log(err));
+    }
   }
 
   function deletePost(e){
@@ -55,5 +66,23 @@ function submitPost(){
           .catch(err => console.log(err));
       }
     }
-    console.log('delete');
+  }
+
+// Enable edit state
+function enableEdit(e){
+
+    if(e.target.parentElement.classList.contains('edit')){
+      const id = e.target.parentElement.dataset.id;
+      const title = e.target.parentElement.previousElementSibling.previousElementSibling.textContent;
+      const body = e.target.parentElement.previousElementSibling.textContent;
+
+      const data = {
+        id,
+        title,
+        body
+      }
+      ui.fillForm(data);
+    }
+
+    e.preventDefault();
   }
